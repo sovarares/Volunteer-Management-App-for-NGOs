@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
+	
+	
+	
     public static void main(String[] args) throws ParseException {
     	
         Scanner sc = new Scanner(System.in);
@@ -14,6 +17,7 @@ public class Main {
         // 1. Inițializare Bază de Date simulată
         List<Utilizator> totiUtilizatorii = new ArrayList<>();
         List<Donator> listaDonatori = new ArrayList<>();
+        List<Voluntar> listaVoluntari = new ArrayList<>();
 
         // 2. Creare conturi inițiale
         Administrator admin = new Administrator(1, "Cosmulete Cosmin", "Cosmin@admin.ro", "Admin123!");
@@ -118,7 +122,7 @@ public class Main {
 
                 case 2:
                     System.out.println("\n--- CREARE CONT NOU ---");
-                    System.out.println("Selectați tipul contului: 1. Donator | 2. Administrator");
+                    System.out.println("Selectați tipul contului: 1. Donator | 2. Administrator | 3. Voluntar");
                     System.out.print("Alegere: ");
                     int tipCont = -1;
                     try {
@@ -144,6 +148,39 @@ public class Main {
                         userNou = new Donator(idNou, "", "", "", TipDonator.PERSOANA_FIZICA);
                     } else if (tipCont == 2) {
                         userNou = new Administrator(idNou, "", "", "");
+                    } else if (tipCont == 3) {
+                    	System.out.print("Introduceti nr. de telefon: ");
+                    	String telefon = sc.nextLine();
+                    	boolean valid = true;
+                    	
+                    		if (telefon.length() != 10)
+                    		{
+                    			valid = false;
+                    		}
+                    		
+                    		if (telefon.indexOf("07") != 0)
+                    		{
+                    			valid = false;
+                    		}
+                    		
+                    		for (int i=2; i<10; i++)
+                    		{
+                    			if ('0' > telefon.charAt(i) || telefon.charAt(i) > '9')
+                    			{
+                    				valid = false;
+                    				break;
+                    			}
+                    		}
+                    		
+                    		if (!valid)
+                    		{
+                    			System.out.print("EROARE: Numarul de telefon nu este valid. \n\n");
+                    		}
+                    	
+                    	
+                    	int idNouIstoric = listaVoluntari.size() + 10;
+                    	
+                        userNou = new Voluntar(idNou, "", "", "", telefon, idNouIstoric );
                     } else {
                         System.out.println("Tip cont invalid. Anulare.");
                         break;
@@ -156,6 +193,10 @@ public class Main {
                         totiUtilizatorii.add(userNou);
                         if (userNou instanceof Donator) {
                             listaDonatori.add((Donator) userNou);
+                        }
+                        if (userNou instanceof Voluntar)
+                        {
+                        	listaVoluntari.add((Voluntar) userNou);
                         }
                         System.out.println(">>> Contul a fost salvat în baza de date! <<<");
                     }

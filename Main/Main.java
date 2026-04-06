@@ -1,11 +1,14 @@
 
 import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
+    	
         Scanner sc = new Scanner(System.in);
         
         // 1. Inițializare Bază de Date simulată
@@ -36,6 +39,12 @@ public class Main {
             System.out.println("6. Vizualizare Raport Donații (DOAR Admin)");
             System.out.println("7. Gestiune Activități (DOAR Admin)");
           //adaugare optiuni pentru voluntari+ generare rapoarte(doar Amin) - Adrian
+            System.out.println("8. Gestionare rapoarte (DOAR Admin)");
+            System.out.println("9. Aplicare pentru o noua activitate (DOAR Voluntari)");
+            System.out.println("10. Schimbare nr. de telefon (DOAR Voluntari)");
+            System.out.println("11. Generarea adeverintei (DOAR Voluntari)");
+            System.out.println("12. Vizualizare istoricului (DOAR Voluntari)");
+            
             System.out.println("0. Ieșire");
             System.out.print("Alegeți o opțiune: ");
             
@@ -279,6 +288,96 @@ public class Main {
                         }
                     } else {
                         System.out.println(">>> ACCES REFUZAT: Doar Administratorul are acces la gestiunea activităților! <<<");
+                    }
+                    break;
+                    
+                case 8:
+                	
+                	if (userLogat instanceof Administrator) {
+                		Administrator adminCreat = (Administrator) userLogat;
+                		adminCreat.gestionareRapoarte();
+                	}
+                	else
+                		System.out.println(">>> ACCES REFUZAT: Doar Administratorul are acces la gestiunea rapoartelor! <<<");
+                	
+                	break;
+                	
+                case 9:
+                    if (userLogat instanceof Voluntar) {
+                        Voluntar voluntarLogat = (Voluntar) userLogat;
+                        System.out.println("\n--- APLICARE ACTIVITATE NOUĂ ---");
+                        
+                        // Avem nevoie de activitățile create de admin pentru a le afișa
+                        // În acest sistem, presupunem că admin-ul definit la început deține lista globală
+                        List<Activitate> activitatiDisponibile = admin.getActivitati();
+                        
+                        if (activitatiDisponibile.isEmpty()) {
+                            System.out.println("Nu există activități disponibile în acest moment.");
+                        } else {
+                            System.out.println("Activități disponibile:");
+                            for (Activitate act : activitatiDisponibile) {
+                                System.out.println(act.afisare());
+                            }
+                            
+                            System.out.print("Introduceți ID-ul activității la care doriți să aplicați: ");
+                            try {
+                                int idAles = sc.nextInt(); sc.nextLine();
+                                Activitate gasita = null;
+                                for (Activitate a : activitatiDisponibile) {
+                                    if (a.getId_activitate() == idAles) {
+                                        gasita = a;
+                                        break;
+                                    }
+                                }
+                                
+                                if (gasita != null) {
+                                    voluntarLogat.aplicaLaActivitate(gasita);
+                                    System.out.println("Cerere procesată pentru: " + gasita.getTitlu());
+                                } else {
+                                    System.out.println("Eroare: Activitatea cu ID " + idAles + " nu există.");
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Eroare la introducerea ID-ului.");
+                                sc.nextLine();
+                            }
+                        }
+                    } else {
+                        System.out.println(">>> ACCES REFUZAT: Doar Voluntarii pot aplica la activități! <<<");
+                    }
+                    break;
+                    
+                case 10:
+                    if (userLogat instanceof Voluntar) {
+                        Voluntar voluntarLogat = (Voluntar) userLogat;
+                        System.out.print("Introduceți noul număr de telefon: ");
+                        String nouTel = sc.nextLine();
+                        voluntarLogat.setTelefon(nouTel);
+                        System.out.println("Numărul de telefon a fost actualizat: " + voluntarLogat.getTelefon());
+                    } else {
+                        System.out.println(">>> ACCES REFUZAT: Doar Voluntarii au număr de telefon asociat! <<<");
+                    }
+                    break;
+                    
+                case 11:
+                    if (userLogat instanceof Voluntar) {
+                        Voluntar voluntarLogat = (Voluntar) userLogat;
+                        System.out.println("Generare adeverință pentru " + voluntarLogat.getNume() + "...");
+                        
+                        voluntarLogat.generareIstoricPdf();
+                        
+                        System.out.println(">>> Succes! Fișierul PDF a fost creat.");
+                    } else {
+                        System.out.println(">>> EROARE: Doar voluntarii pot genera acest tip de raport! <<<");
+                    }
+                    break;
+                    
+                case 12:
+                    if (userLogat instanceof Voluntar) {
+                        Voluntar voluntarLogat = (Voluntar) userLogat;
+                        System.out.println("\n--- ISTORICUL MEU DE VOLUNTARIAT ---");
+                        voluntarLogat.vizualizareIstoric();
+                    } else {
+                        System.out.println(">>> ACCES REFUZAT: Doar Voluntarii au un istoric de activități! <<<");
                     }
                     break;
 

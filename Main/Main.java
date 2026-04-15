@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -9,25 +8,33 @@ import java.util.Scanner;
 public class Main {
 	
 	
-	
     public static void main(String[] args) throws ParseException {
     	
         Scanner sc = new Scanner(System.in);
         
-        // 1. Inițializare Bază de Date simulată
+        //Inițializare baza de date simulata
         List<Utilizator> totiUtilizatorii = new ArrayList<>();
         List<Donator> listaDonatori = new ArrayList<>();
         List<Voluntar> listaVoluntari = new ArrayList<>();
 
-        // 2. Creare conturi inițiale
+        //Creare conturi inițiale
         Administrator admin = new Administrator(1, "Cosmulete Cosmin", "Cosmin@admin.ro", "Admin123!");
         Donator donator1 = new Donator(101, "Ion Pop", "ion@test.ro", "Ion123!", TipDonator.PERSOANA_FIZICA);
+        Voluntar voluntar1 = new Voluntar(201, "Ana Ionescu", "ana@gmail.com", "Ana123!", "0712345678", 10);
         
         totiUtilizatorii.add(admin);
         totiUtilizatorii.add(donator1);
         listaDonatori.add(donator1);
+        totiUtilizatorii.add(voluntar1);
+        listaVoluntari.add(voluntar1);
+        
+        Activitate act1 = new Activitate(10, "Ecologizare Padure", "Curatam padurea de plastice.", new Date(), TipActivitate.TEREN, 20);
+        Activitate act2 = new Activitate(11, "Strangere de fonduri Craciun", "Colectam donatii in centru.", new Date(), TipActivitate.FUNDRAISING, 5);
 
-        // 3. Setăm utilizatorul logat implicit
+        admin.creareActivitate(act1);
+        admin.creareActivitate(act2);
+        
+        // Setam utilizatorul logat implicit
         Utilizator userLogat = admin; 
 
         boolean running = true;
@@ -42,7 +49,6 @@ public class Main {
             System.out.println("5. Gestiune Utilizatori (DOAR Admin)");
             System.out.println("6. Vizualizare Raport Donații (DOAR Admin)");
             System.out.println("7. Gestiune Activități (DOAR Admin)");
-          //adaugare optiuni pentru voluntari+ generare rapoarte(doar Amin) - Adrian
             System.out.println("8. Gestionare rapoarte (DOAR Admin)");
             System.out.println("9. Aplicare pentru o noua activitate (DOAR Voluntari)");
             System.out.println("10. Schimbare nr. de telefon (DOAR Voluntari)");
@@ -85,6 +91,7 @@ public class Main {
                     System.out.print("Introduceți parola: ");
                     String parolaLogin = sc.nextLine();
                     
+                    System.out.println("\nSe incearca autentificarea pentru: " + emailLogin + "...");
                     boolean logareReusita = false;
                     for (Utilizator u : totiUtilizatorii) {
                         if (u.autentificare(emailLogin, parolaLogin)) {
@@ -105,7 +112,6 @@ public class Main {
                     
                     boolean contGasit = false;
                     for (Utilizator u : totiUtilizatorii) {
-                        // Folosim u.email (care este protected)
                         if (u.email.equals(emailRecup)) {
                             u.recuperareParola(emailRecup);
                             contGasit = true;
@@ -241,7 +247,6 @@ public class Main {
                     break;
 
                 case 7:
-                    // --- SUB-MENIU GESTIUNE ACTIVITĂȚI ---
                     if (userLogat instanceof Administrator) {
                         Administrator adminCurent = (Administrator) userLogat;
                         boolean meniuActivitati = true;
@@ -279,10 +284,29 @@ public class Main {
                                         String titluAct = sc.nextLine();
                                         System.out.print("Descriere scurtă: ");
                                         String descAct = sc.nextLine();
+                                        
+                                        System.out.println("Alegeți tipul activității:");
+                                        System.out.println("1. TEREN");
+                                        System.out.println("2. LOGISTICA");
+                                        System.out.println("3. ADMINISTRATIV");
+                                        System.out.println("4. FUNDRAISING");
+                                        System.out.println("5. EDUCATIONAL");
+                                        System.out.print("Opțiune tip (1-5): ");
+                                        int opTip = sc.nextInt(); sc.nextLine();
+                                        
+                                        TipActivitate tipSelectat = TipActivitate.TEREN; 
+                                        switch (opTip) {
+                                            case 1: tipSelectat = TipActivitate.TEREN; break;
+                                            case 2: tipSelectat = TipActivitate.LOGISTICA; break;
+                                            case 3: tipSelectat = TipActivitate.ADMINISTRATIV; break;
+                                            case 4: tipSelectat = TipActivitate.FUNDRAISING; break;
+                                            case 5: tipSelectat = TipActivitate.EDUCATIONAL; break;
+                                            default: System.out.println("Opțiune invalidă. Se va seta tipul TEREN din oficiu.");
+                                        }
+                                        
                                         System.out.print("Locuri disponibile: ");
                                         int locuriAct = sc.nextInt(); sc.nextLine();
                                         
-                                        // Folosim date implicite pentru data de început (azi) și tipul activității pentru a simplifica consola
                                         Activitate nouaAct = new Activitate(idAct, titluAct, descAct, new Date(), TipActivitate.TEREN, locuriAct);
                                         adminCurent.creareActivitate(nouaAct);
                                     } catch (Exception e) {
@@ -348,8 +372,6 @@ public class Main {
                         Voluntar voluntarLogat = (Voluntar) userLogat;
                         System.out.println("\n--- APLICARE ACTIVITATE NOUĂ ---");
                         
-                        // Avem nevoie de activitățile create de admin pentru a le afișa
-                        // În acest sistem, presupunem că admin-ul definit la început deține lista globală
                         List<Activitate> activitatiDisponibile = admin.getActivitati();
                         
                         if (activitatiDisponibile.isEmpty()) {
@@ -372,8 +394,12 @@ public class Main {
                                 }
                                 
                                 if (gasita != null) {
-                                    voluntarLogat.aplicaLaActivitate(gasita);
-                                    System.out.println("Cerere procesată pentru: " + gasita.getTitlu());
+                                    boolean inscriereReusita = voluntarLogat.aplicaLaActivitate(gasita);
+                                    
+                                    if (inscriereReusita) {
+                                        System.out.println(">>> Cerere procesată cu succes pentru: " + gasita.getTitlu());
+                                    }
+                                    
                                 } else {
                                     System.out.println("Eroare: Activitatea cu ID " + idAles + " nu există.");
                                 }
@@ -434,4 +460,3 @@ public class Main {
         sc.close();
     }
 }
-

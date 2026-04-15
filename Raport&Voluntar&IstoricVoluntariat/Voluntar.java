@@ -1,4 +1,3 @@
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,13 +21,22 @@ public class Voluntar extends Utilizator{
 		istoric = new IstoricVoluntariat(id_istoric);
 	}
 	
-	public void aplicaLaActivitate(Activitate activitate)
+	public boolean aplicaLaActivitate(Activitate activitate)
 	{
+
+		if (this.activitati.contains(activitate)) {
+			System.out.println("Eroare: Ești deja înscris la activitatea '" + activitate.getTitlu() + "'!");
+			return false; 
+		}
+		
 		if (activitate.verificaDisponibilitate())
 		{
 			activitate.adaugareVoluntar(this);
 			activitati.add(activitate);
+			return true; 
 		}
+		
+		return false; 
 	}
 	
 	public void renuntalaActivitate(Activitate activitate)

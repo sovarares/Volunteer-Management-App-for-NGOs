@@ -14,7 +14,6 @@ public abstract class Utilizator {
     }
 
     public boolean autentificare(String email, String parola) {
-        System.out.println("Se incearca autentificarea pentru: " + email);
         return verificaCredentiale(email, parola);
     }
 

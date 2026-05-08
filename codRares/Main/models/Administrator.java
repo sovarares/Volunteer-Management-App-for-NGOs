@@ -79,14 +79,14 @@ public class Administrator extends Utilizator {
     }
 
     public void gestionareRapoarte() {
-        //DE MODIFICAT IN FUNCTIE DE CLASA RAPOARTE - ADRIAN
+ 
     	Scanner scanner = new Scanner(System.in);
         boolean running = true; 
         
         while (running)
         {
         	System.out.println("\n--- Panou Gestiune Rapoarte ---");
-            System.out.println("1. Afișare toate rapoatele");
+            System.out.println("1. Afișare toate rapoartele");
             System.out.println("2. Ștergere raport după ID");
             System.out.println("3. Creare raport nou");
             System.out.println("4. Afisare raport detaliat dupa ID");
@@ -139,62 +139,72 @@ public class Administrator extends Utilizator {
             	break;
             	
             case 3:
-            	
-            	System.out.print("Introduceți ID-ul pentru noul raport: ");
-            	
-            	try {
+                System.out.print("Introduceți ID-ul pentru noul raport: ");
+                
+                try {
                     int id = scanner.nextInt();
-                    scanner.nextLine();
-                    boolean gasit = rapoarte.removeIf(r -> r.getId_raport() == id);
+                    scanner.nextLine(); 
+                    
+                    boolean gasit = false;
+                    for (Raport r : rapoarte) {
+                        if (r.getId_raport() == id) {
+                            gasit = true;
+                            break;
+                        }
+                    }
                     
                     if (gasit) {
-                        System.out.println("Raportul cu ID " + id + " exista deja.");
+                        System.out.println("Eroare: Raportul cu ID-ul " + id + " exista deja!");
                     }
                     else
                     {
-                    	System.out.print("Introduceți tipul de raport: ");
-                    	String tip = scanner.nextLine();
-                    	
-                    	if (tip.isBlank() || tip.isEmpty()) break;
-                    	
-                    	Raport newRaport = new Raport(id, tip, this);
-                    	
-                    	rapoarte.add(newRaport);
+                        System.out.print("Introduceți tipul de raport: ");
+                        String tip = scanner.nextLine();
+                        
+                        if (tip.isBlank() || tip.isEmpty()) {
+                            System.out.println("Eroare: Tipul raportului nu poate fi gol. Crearea a fost anulată.");
+                            break; 
+                        }
+                        
+                        Raport newRaport = new Raport(id, tip, this);
+                        rapoarte.add(newRaport);
+                        System.out.println("Succes: Raportul a fost creat!");
                     }
                     
                 } catch (Exception e) {
                     System.out.println("Eroare: ID-ul trebuie să fie un număr.");
-                    scanner.nextLine();
+                    scanner.nextLine(); 
                 }
-            	
-            	break;
+                
+                break;
             	
             case 4:
-            	
-            	System.out.println();
-            	System.out.print("Introduceți ID-ul raportului pentru afisare detaliata: ");
+                System.out.println();
+                System.out.print("Introduceți ID-ul raportului pentru afisare detaliata: ");
                 try {
                     int idCautat = scanner.nextInt();
                     scanner.nextLine();
-                    boolean gasit = rapoarte.removeIf(r -> r.getId_raport() == idCautat);
                     
-                    if (gasit) {
-                        
-                    	rapoarte.forEach(r -> {
-                    		if (r.getId_raport() == idCautat)
-                    		{
-                    			r.afisareDetaliata();
-                    		}
-                    	});
-                    } else {
+                    boolean gasit = false;
+                    
+                    for (Raport r : rapoarte) {
+                        if (r.getId_raport() == idCautat) {
+
+                            r.afisareDetaliata();
+                            gasit = true;
+                            break; 
+                        }
+                    }
+                    
+                    if (!gasit) {
                         System.out.println("Raportul nu a fost găsit.");
                     }
                 } catch (Exception e) {
                     System.out.println("Eroare: ID-ul trebuie să fie un număr.");
                     scanner.nextLine();
                 }
-            	
-            	break;
+                
+                break;
             	
             case 0:
                 running = false; 

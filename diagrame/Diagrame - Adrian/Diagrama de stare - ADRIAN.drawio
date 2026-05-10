@@ -1,0 +1,135 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Page-1" id="gJmqzY1wcolz1ErQo6I2">
+    <mxGraphModel dx="1873" dy="1031" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-1" parent="1" style="ellipse;html=1;shape=startState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="285" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-2" edge="1" parent="1" source="DN4tPA7QKUwkNiMn7j1H-1" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-9" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="699.5" y="810" />
+            </Array>
+            <mxPoint x="699.5" y="680" as="sourcePoint" />
+            <mxPoint x="699.5" y="830" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-13" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="299" y="540" as="sourcePoint" />
+            <mxPoint x="299" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-15" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="procesare_date [suma este un numar]" vertex="1">
+          <mxGeometry height="30" width="120" x="530" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-16" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="[suma nu este un numar]" vertex="1">
+          <mxGeometry height="30" width="140" x="300" y="550" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-17" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
+          <mxGeometry height="30" width="30" x="285" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-19" edge="1" parent="1" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" target="DN4tPA7QKUwkNiMn7j1H-30" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="450" y="630" />
+              <mxPoint x="450" y="630" />
+            </Array>
+            <mxPoint x="620" y="629.5" as="sourcePoint" />
+            <mxPoint x="460" y="629.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-20" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" value="ProcesareDonatie" vertex="1">
+          <mxGeometry height="80" width="160" x="620" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-21" parent="DN4tPA7QKUwkNiMn7j1H-20" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" value="&lt;div&gt;/do procesareDonatie&lt;/div&gt;/exit verificareMetodaPlata" vertex="1">
+          <mxGeometry height="50" width="160" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-22" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" value="AutentificatDonator" vertex="1">
+          <mxGeometry height="60" width="220" x="190" y="330" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-23" parent="DN4tPA7QKUwkNiMn7j1H-22" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" value="/entry verificare_rol_utilizator&lt;div&gt;/do afisare_meniu_donator&lt;/div&gt;" vertex="1">
+          <mxGeometry height="30" width="220" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-24" edge="1" parent="1" source="DN4tPA7QKUwkNiMn7j1H-22" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-25" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="realizeaza_donatie" vertex="1">
+          <mxGeometry height="30" width="110" x="300" y="410" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-26" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" value="IntroducereDateDonatie" vertex="1">
+          <mxGeometry height="80" width="235" x="182.5" y="460" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-27" parent="DN4tPA7QKUwkNiMn7j1H-26" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" value="&lt;div&gt;/entry solicitareSumaMetodaPlata&lt;/div&gt;&lt;div&gt;/do introducereDate&lt;/div&gt;/exit verificareSuma" vertex="1">
+          <mxGeometry height="50" width="235" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-28" edge="1" parent="1" source="DN4tPA7QKUwkNiMn7j1H-27" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;exitX=1;exitY=0.25;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="DN4tPA7QKUwkNiMn7j1H-20" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="418" y="500" />
+              <mxPoint x="700" y="500" />
+            </Array>
+            <mxPoint x="310" y="610" as="sourcePoint" />
+            <mxPoint x="620" y="500" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-29" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" value="EroareDonatie" vertex="1">
+          <mxGeometry height="70" width="200" x="200" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-30" parent="DN4tPA7QKUwkNiMn7j1H-29" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" value="/entry afisare_mesaj_eroare&lt;div&gt;/exit revenire_meniu&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="200" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-31" edge="1" parent="1" source="DN4tPA7QKUwkNiMn7j1H-29" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="300" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-32" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="[metoda de plata este validata si suma este pozitiva]" vertex="1">
+          <mxGeometry height="30" width="170" x="530" y="730" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-33" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="[metoda de plata nu este validata sau suma negativa sau zero]" vertex="1">
+          <mxGeometry height="30" width="190" x="410" y="630" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-34" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" value="SalvareIstoricDonatii" vertex="1">
+          <mxGeometry height="70" width="160" x="620" y="830" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-35" parent="DN4tPA7QKUwkNiMn7j1H-34" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" value="/do salvare_donatie&lt;div&gt;/exit confirmare_salvare&lt;/div&gt;" vertex="1">
+          <mxGeometry height="40" width="160" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-36" edge="1" parent="1" source="DN4tPA7QKUwkNiMn7j1H-35" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="700" y="910" as="sourcePoint" />
+            <mxPoint x="700" y="950" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-37" parent="1" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=0;resizeLast=1;container=0;fontColor=#000000;collapsible=0;rounded=1;arcSize=30;strokeColor=#ff0000;fillColor=#ffffc0;swimlaneFillColor=#ffffc0;dropTarget=0;" value="EmitereChitanta" vertex="1">
+          <mxGeometry height="80" width="200" x="600" y="950" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-38" parent="DN4tPA7QKUwkNiMn7j1H-37" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;spacingLeft=4;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;fontColor=#000000;" value="/do emitere_chitanta&lt;div&gt;/exit afisare_confirmare_donatie&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="200" y="30" as="geometry" />
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-39" edge="1" parent="1" source="DN4tPA7QKUwkNiMn7j1H-38" style="edgeStyle=orthogonalEdgeStyle;html=1;verticalAlign=bottom;endArrow=open;endSize=8;strokeColor=#ff0000;rounded=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="DN4tPA7QKUwkNiMn7j1H-17" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="300" y="993" />
+            </Array>
+            <mxPoint x="580" y="990" as="sourcePoint" />
+            <mxPoint x="180" y="993" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DN4tPA7QKUwkNiMn7j1H-40" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="finalizare" vertex="1">
+          <mxGeometry height="30" width="60" x="380" y="960" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

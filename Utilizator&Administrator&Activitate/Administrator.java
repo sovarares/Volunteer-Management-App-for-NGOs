@@ -1,4 +1,4 @@
-package models;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -252,9 +252,40 @@ public class Administrator extends Utilizator {
 
     public void creareActivitate(Activitate a) {
         if (a != null) {
-            activitati.add(a);
-            System.out.println("Administratorul " + this.nume + " a creat activitatea: " + a.getTitlu());
+        	if (a.getLocuri_disponibile() > 0)
+        	{
+        		if (!existaActivitateCuID(a.getId_activitate()) && !existaActivitateCuTitlul(a.getTitlu()))
+        		{
+        			activitati.add(a);
+                    System.out.println("Administratorul " + this.nume + " a creat activitatea: " + a.getTitlu());
+        		}
+        		else
+        			System.out.println("EROARE: Activitatea: " + a.getTitlu() + " are ID sau titlu identic cu unul din cele deja salvate.");
+        		
+        	}
+        	else
+        		System.out.println("EROARE: Activitatea: " + a.getTitlu() + " are nr. de locuri negativ sau 0.");
+        	
         }
+    }
+    
+    public boolean existaActivitateCuID(int id)
+    {
+    	for (Activitate a : activitati)
+    	{
+    		if (a.getId_activitate() == id) return true;
+    	}
+    	return false;
+    }
+    
+    public boolean existaActivitateCuTitlul(String titlu)
+    {
+    	titlu = titlu.trim();
+    	for (Activitate a : activitati)
+    	{
+    		if (titlu.equalsIgnoreCase(a.getTitlu())) return true;
+    	}
+    	return false;
     }
 
     public void modificareActivitate(int id, String nouTitlu, int noiLocuri) {

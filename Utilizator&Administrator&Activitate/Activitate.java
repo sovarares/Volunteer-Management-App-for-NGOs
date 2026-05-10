@@ -14,8 +14,8 @@ public class Activitate {
 
     public Activitate(int id_activitate, String titlu, String descriere, Date data_inceput, TipActivitate tip_activitate, int locuri_disponibile) {
         this.id_activitate = id_activitate;
-        this.titlu = titlu;
-        this.descriere = descriere;
+        this.titlu = titlu.trim();
+        this.descriere = descriere.trim();
         this.data_inceput = data_inceput;
         this.tip_activitate = tip_activitate;
         this.locuri_disponibile = locuri_disponibile;
@@ -37,8 +37,8 @@ public class Activitate {
     
     public int getId_activitate() { return id_activitate; }
     public String getTitlu() { return titlu; }
-    public void setTitlu(String titlu) { this.titlu = titlu; }
-    public void setDescriere(String descriere) { this.descriere = descriere; }
+    public void setTitlu(String titlu) { this.titlu = titlu.trim(); }
+    public void setDescriere(String descriere) { this.descriere = descriere.trim(); }
     public void setLocuri_disponibile(int locuri) { this.locuri_disponibile = locuri; }
     public int getLocuri_disponibile() {return locuri_disponibile;}
     public TipActivitate getTip_activitate() {return tip_activitate;}

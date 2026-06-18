@@ -1,0 +1,463 @@
+package models;
+import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Scanner;
+
+public class Main {
+	
+	
+    public static void main(String[] args) throws ParseException {
+    	
+        Scanner sc = new Scanner(System.in);
+        
+        //Inițializare baza de date simulata
+        List<Utilizator> totiUtilizatorii = new ArrayList<>();
+        List<Donator> listaDonatori = new ArrayList<>();
+        List<Voluntar> listaVoluntari = new ArrayList<>();
+
+        //Creare conturi inițiale
+        Administrator admin = new Administrator(1, "Cosmulete Cosmin", "Cosmin@admin.ro", "Admin123!");
+        Donator donator1 = new Donator(101, "Ion Pop", "ion@test.ro", "Ion123!", TipDonator.PERSOANA_FIZICA);
+        Voluntar voluntar1 = new Voluntar(201, "Ana Ionescu", "ana@gmail.com", "Ana123!", "0712345678", 10);
+        
+        totiUtilizatorii.add(admin);
+        totiUtilizatorii.add(donator1);
+        listaDonatori.add(donator1);
+        totiUtilizatorii.add(voluntar1);
+        listaVoluntari.add(voluntar1);
+        
+        Activitate act1 = new Activitate(10, "Ecologizare Padure", "Curatam padurea de plastice.", new Date(), TipActivitate.TEREN, 20);
+        Activitate act2 = new Activitate(11, "Strangere de fonduri Craciun", "Colectam donatii in centru.", new Date(), TipActivitate.FUNDRAISING, 5);
+
+        admin.creareActivitate(act1);
+        admin.creareActivitate(act2);
+        
+        // Setam utilizatorul logat implicit
+        Utilizator userLogat = admin; 
+
+        boolean running = true;
+        while (running) {
+            System.out.println("\n=================================================");
+            System.out.println("   SISTEM ONG - Logat ca: " + userLogat.getNume() + " (Rol: " + userLogat.getClass().getSimpleName() + ")");
+            System.out.println("=================================================");
+            System.out.println("1. Autentificare (Schimbă utilizatorul curent)");
+            System.out.println("2. Creare Cont Nou (Înregistrare)");
+            System.out.println("3. Actualizare Profil (Accesibil oricui)");
+            System.out.println("4. Realizează Donație (DOAR Donator)");
+            System.out.println("5. Gestiune Utilizatori (DOAR Admin)");
+            System.out.println("6. Vizualizare Raport Donații (DOAR Admin)");
+            System.out.println("7. Gestiune Activități (DOAR Admin)");
+            System.out.println("8. Gestionare rapoarte (DOAR Admin)");
+            System.out.println("9. Aplicare pentru o noua activitate (DOAR Voluntari)");
+            System.out.println("10. Schimbare nr. de telefon (DOAR Voluntari)");
+            System.out.println("11. Generarea adeverintei (DOAR Voluntari)");
+            System.out.println("12. Vizualizare istoricului (DOAR Voluntari)");
+            
+            System.out.println("0. Ieșire");
+            System.out.print("Alegeți o opțiune: ");
+            
+            int opt = -1;
+            try {
+                opt = sc.nextInt();
+                sc.nextLine(); 
+            } catch (Exception e) {
+                System.out.println("Eroare: Vă rugăm să introduceți un număr valid!");
+                sc.nextLine(); 
+                continue;
+            }
+
+            switch (opt) {
+            case 1:
+                System.out.println("\n--- MENIU AUTENTIFICARE ---");
+                System.out.println("1. Conectare cont existent");
+                System.out.println("2. Mi-am uitat parola (Recuperare)");
+                System.out.print("Alegere: ");
+                
+                int authOpt = -1;
+                try {
+                    authOpt = sc.nextInt();
+                    sc.nextLine();
+                } catch (Exception e) {
+                    System.out.println("Opțiune invalidă.");
+                    sc.nextLine();
+                    break;
+                }
+
+                if (authOpt == 1) {
+                    System.out.print("Introduceți email: ");
+                    String emailLogin = sc.nextLine();
+                    System.out.print("Introduceți parola: ");
+                    String parolaLogin = sc.nextLine();
+                    
+                    System.out.println("\nSe incearca autentificarea pentru: " + emailLogin + "...");
+                    boolean logareReusita = false;
+                    for (Utilizator u : totiUtilizatorii) {
+                        if (u.autentificare(emailLogin, parolaLogin)) {
+                            userLogat = u;
+                            System.out.println(">>> Autentificare reușită! Bine ai venit, " + u.getNume() + " <<<");
+                            logareReusita = true;
+                            break;
+                        }
+                    }
+                    if (!logareReusita) {
+                        System.out.println(">>> EROARE: Email sau parolă incorectă! <<<");
+                    }
+                } 
+                else if (authOpt == 2) {
+                    // Implementarea relației <<extend>>: Recuperare parola
+                    System.out.print("Introduceți email-ul asociat contului: ");
+                    String emailRecup = sc.nextLine();
+                    
+                    boolean contGasit = false;
+                    for (Utilizator u : totiUtilizatorii) {
+                        if (u.email.equals(emailRecup)) {
+                            u.recuperareParola(emailRecup);
+                            contGasit = true;
+                            break;
+                        }
+                    }
+                    if (!contGasit) {
+                        System.out.println("EROARE: Nu există niciun cont asociat cu acest email în sistem.");
+                    }
+                } else {
+                    System.out.println("Opțiune inexistentă.");
+                }
+                break;
+
+                case 2:
+                    System.out.println("\n--- CREARE CONT NOU ---");
+                    System.out.println("Selectați tipul contului: 1. Donator | 2. Administrator | 3. Voluntar");
+                    System.out.print("Alegere: ");
+                    int tipCont = -1;
+                    try {
+                        tipCont = sc.nextInt();
+                        sc.nextLine();
+                    } catch (Exception e) {
+                        System.out.println("Eroare la alegerea tipului de cont.");
+                        sc.nextLine();
+                        break;
+                    }
+
+                    System.out.print("Nume: ");
+                    String numeC = sc.nextLine();
+                    System.out.print("Email: ");
+                    String emailC = sc.nextLine();
+                    System.out.print("Parola: ");
+                    String parolaC = sc.nextLine();
+
+                    int idNou = totiUtilizatorii.size() + 100;
+                    Utilizator userNou = null;
+
+                    if (tipCont == 1) {
+                        userNou = new Donator(idNou, "", "", "", TipDonator.PERSOANA_FIZICA);
+                    } else if (tipCont == 2) {
+                        userNou = new Administrator(idNou, "", "", "");
+                    } else if (tipCont == 3) {
+                    	System.out.print("Introduceti nr. de telefon: ");
+                    	String telefon = sc.nextLine();
+                    	boolean valid = true;
+                    	
+                    		if (telefon.length() != 10)
+                    		{
+                    			valid = false;
+                    		}
+                    		
+                    		if (telefon.indexOf("07") != 0)
+                    		{
+                    			valid = false;
+                    		}
+                    		
+                    		for (int i=2; i<10; i++)
+                    		{
+                    			if ('0' > telefon.charAt(i) || telefon.charAt(i) > '9')
+                    			{
+                    				valid = false;
+                    				break;
+                    			}
+                    		}
+                    		
+                    		if (!valid)
+                    		{
+                    			System.out.print("EROARE: Numarul de telefon nu este valid. \n\n");
+                    		}
+                    	
+                    	
+                    	int idNouIstoric = listaVoluntari.size() + 10;
+                    	
+                        userNou = new Voluntar(idNou, "", "", "", telefon, idNouIstoric );
+                    } else {
+                        System.out.println("Tip cont invalid. Anulare.");
+                        break;
+                    }
+
+                    System.out.println("\nSe procesează datele...");
+                    userNou.creareCont(numeC, emailC, parolaC);
+
+                    if (!userNou.email.isEmpty()) {
+                        totiUtilizatorii.add(userNou);
+                        if (userNou instanceof Donator) {
+                            listaDonatori.add((Donator) userNou);
+                        }
+                        if (userNou instanceof Voluntar)
+                        {
+                        	listaVoluntari.add((Voluntar) userNou);
+                        }
+                        System.out.println(">>> Contul a fost salvat în baza de date! <<<");
+                    }
+                    break;
+
+                case 3:
+                    userLogat.actualizareProfil();
+                    break;
+
+                case 4:
+                    if (userLogat instanceof Donator) {
+                        System.out.print("Introduceți suma de donat (RON): ");
+                        try {
+                            double suma = sc.nextDouble();
+                            sc.nextLine();
+                            System.out.print("Introduceți metoda de plată (Card/Transfer/PayPal): ");
+                            String metodaPlata = sc.nextLine();
+                            ((Donator) userLogat).realizeazaDonatie(suma, metodaPlata);
+                        } catch (Exception e) {
+                            System.out.println("Eroare la introducerea datelor.");
+                            sc.nextLine();
+                        }
+                    } else {
+                        System.out.println(">>> EROARE: Administratorii nu pot dona. Autentificați-vă ca Donator! <<<");
+                    }
+                    break;
+
+                case 5:
+                    if (userLogat instanceof Administrator) {
+                        ((Administrator) userLogat).gestionareUtilizatori(totiUtilizatorii);
+                    } else {
+                        System.out.println(">>> ACCES REFUZAT: Nu aveți drepturi de Administrator! <<<");
+                    }
+                    break;
+
+                case 6:
+                    if (userLogat instanceof Administrator) {
+                        ((Administrator) userLogat).vizualizareDonatii(listaDonatori);
+                    } else {
+                        System.out.println(">>> ACCES REFUZAT: Doar Administratorul poate vedea raportul! <<<");
+                    }
+                    break;
+
+                case 7:
+                    if (userLogat instanceof Administrator) {
+                        Administrator adminCurent = (Administrator) userLogat;
+                        boolean meniuActivitati = true;
+                        
+                        while (meniuActivitati) {
+                            System.out.println("\n--- GESTIUNE ACTIVITĂȚI ONG ---");
+                            System.out.println("1. Afișare toate activitățile");
+                            System.out.println("2. Creare activitate nouă");
+                            System.out.println("3. Modificare activitate");
+                            System.out.println("4. Ștergere activitate");
+                            System.out.println("0. Înapoi la meniul principal");
+                            System.out.print("Opțiune: ");
+                            
+                            int optAct = -1;
+                            try {
+                                optAct = sc.nextInt();
+                                sc.nextLine();
+                            } catch (Exception e) {
+                                System.out.println("Opțiune invalidă.");
+                                sc.nextLine();
+                                continue;
+                            }
+                            
+                            switch (optAct) {
+                                case 1:
+                                    adminCurent.afisareActivitati();
+                                    break;
+                                    
+                                case 2:
+                                    System.out.println("\n-- Adăugare Activitate --");
+                                    try {
+                                        System.out.print("ID Activitate (nr. întreg): ");
+                                        int idAct = sc.nextInt(); sc.nextLine();
+                                        System.out.print("Titlu: ");
+                                        String titluAct = sc.nextLine();
+                                        System.out.print("Descriere scurtă: ");
+                                        String descAct = sc.nextLine();
+                                        
+                                        System.out.println("Alegeți tipul activității:");
+                                        System.out.println("1. TEREN");
+                                        System.out.println("2. LOGISTICA");
+                                        System.out.println("3. ADMINISTRATIV");
+                                        System.out.println("4. FUNDRAISING");
+                                        System.out.println("5. EDUCATIONAL");
+                                        System.out.print("Opțiune tip (1-5): ");
+                                        int opTip = sc.nextInt(); sc.nextLine();
+                                        
+                                        TipActivitate tipSelectat = TipActivitate.TEREN; 
+                                        switch (opTip) {
+                                            case 1: tipSelectat = TipActivitate.TEREN; break;
+                                            case 2: tipSelectat = TipActivitate.LOGISTICA; break;
+                                            case 3: tipSelectat = TipActivitate.ADMINISTRATIV; break;
+                                            case 4: tipSelectat = TipActivitate.FUNDRAISING; break;
+                                            case 5: tipSelectat = TipActivitate.EDUCATIONAL; break;
+                                            default: System.out.println("Opțiune invalidă. Se va seta tipul TEREN din oficiu.");
+                                        }
+                                        
+                                        System.out.print("Locuri disponibile: ");
+                                        int locuriAct = sc.nextInt(); sc.nextLine();
+                                        
+                                        Activitate nouaAct = new Activitate(idAct, titluAct, descAct, new Date(), TipActivitate.TEREN, locuriAct);
+                                        adminCurent.creareActivitate(nouaAct);
+                                    } catch (Exception e) {
+                                        System.out.println("Eroare la introducerea datelor. ID-ul și locurile trebuie să fie numere.");
+                                        sc.nextLine();
+                                    }
+                                    break;
+                                    
+                                case 3:
+                                    System.out.println("\n-- Modificare Activitate --");
+                                    try {
+                                        System.out.print("Introduceți ID-ul activității de modificat: ");
+                                        int idMod = sc.nextInt(); sc.nextLine();
+                                        System.out.print("Introduceți noul titlu: ");
+                                        String titluMod = sc.nextLine();
+                                        System.out.print("Introduceți noul număr de locuri disponibile: ");
+                                        int locuriMod = sc.nextInt(); sc.nextLine();
+                                        
+                                        adminCurent.modificareActivitate(idMod, titluMod, locuriMod);
+                                    } catch (Exception e) {
+                                        System.out.println("Eroare la introducerea datelor.");
+                                        sc.nextLine();
+                                    }
+                                    break;
+                                    
+                                case 4:
+                                    System.out.print("\nIntroduceți ID-ul activității pentru ștergere: ");
+                                    try {
+                                        int idSters = sc.nextInt(); sc.nextLine();
+                                        adminCurent.stergereActivitate(idSters);
+                                    } catch (Exception e) {
+                                        System.out.println("ID invalid.");
+                                        sc.nextLine();
+                                    }
+                                    break;
+                                    
+                                case 0:
+                                    meniuActivitati = false;
+                                    break;
+                                    
+                                default:
+                                    System.out.println("Opțiune inexistentă.");
+                            }
+                        }
+                    } else {
+                        System.out.println(">>> ACCES REFUZAT: Doar Administratorul are acces la gestiunea activităților! <<<");
+                    }
+                    break;
+                    
+                case 8:
+                	
+                	if (userLogat instanceof Administrator) {
+                		Administrator adminCreat = (Administrator) userLogat;
+                		adminCreat.gestionareRapoarte();
+                	}
+                	else
+                		System.out.println(">>> ACCES REFUZAT: Doar Administratorul are acces la gestiunea rapoartelor! <<<");
+                	
+                	break;
+                	
+                case 9:
+                    if (userLogat instanceof Voluntar) {
+                        Voluntar voluntarLogat = (Voluntar) userLogat;
+                        System.out.println("\n--- APLICARE ACTIVITATE NOUĂ ---");
+                        
+                        List<Activitate> activitatiDisponibile = admin.getActivitati();
+                        
+                        if (activitatiDisponibile.isEmpty()) {
+                            System.out.println("Nu există activități disponibile în acest moment.");
+                        } else {
+                            System.out.println("Activități disponibile:");
+                            for (Activitate act : activitatiDisponibile) {
+                                System.out.println(act.afisare());
+                            }
+                            
+                            System.out.print("Introduceți ID-ul activității la care doriți să aplicați: ");
+                            try {
+                                int idAles = sc.nextInt(); sc.nextLine();
+                                Activitate gasita = null;
+                                for (Activitate a : activitatiDisponibile) {
+                                    if (a.getId_activitate() == idAles) {
+                                        gasita = a;
+                                        break;
+                                    }
+                                }
+                                
+                                if (gasita != null) {
+                                    boolean inscriereReusita = voluntarLogat.aplicaLaActivitate(gasita);
+                                    
+                                    if (inscriereReusita) {
+                                        System.out.println(">>> Cerere procesată cu succes pentru: " + gasita.getTitlu());
+                                    }
+                                    
+                                } else {
+                                    System.out.println("Eroare: Activitatea cu ID " + idAles + " nu există.");
+                                }
+                            } catch (Exception e) {
+                                System.out.println("Eroare la introducerea ID-ului.");
+                                sc.nextLine();
+                            }
+                        }
+                    } else {
+                        System.out.println(">>> ACCES REFUZAT: Doar Voluntarii pot aplica la activități! <<<");
+                    }
+                    break;
+                    
+                case 10:
+                    if (userLogat instanceof Voluntar) {
+                        Voluntar voluntarLogat = (Voluntar) userLogat;
+                        System.out.print("Introduceți noul număr de telefon: ");
+                        String nouTel = sc.nextLine();
+                        voluntarLogat.setTelefon(nouTel);
+                        System.out.println("Numărul de telefon a fost actualizat: " + voluntarLogat.getTelefon());
+                    } else {
+                        System.out.println(">>> ACCES REFUZAT: Doar Voluntarii au număr de telefon asociat! <<<");
+                    }
+                    break;
+                    
+                case 11:
+                    if (userLogat instanceof Voluntar) {
+                        Voluntar voluntarLogat = (Voluntar) userLogat;
+                        System.out.println("Generare adeverință pentru " + voluntarLogat.getNume() + "...");
+                        
+                        voluntarLogat.generareIstoricPdf();
+                        
+                        System.out.println(">>> Succes! Fișierul PDF a fost creat.");
+                    } else {
+                        System.out.println(">>> EROARE: Doar voluntarii pot genera acest tip de raport! <<<");
+                    }
+                    break;
+                    
+                case 12:
+                    if (userLogat instanceof Voluntar) {
+                        Voluntar voluntarLogat = (Voluntar) userLogat;
+                        System.out.println("\n--- ISTORICUL MEU DE VOLUNTARIAT ---");
+                        voluntarLogat.vizualizareIstoric();
+                    } else {
+                        System.out.println(">>> ACCES REFUZAT: Doar Voluntarii au un istoric de activități! <<<");
+                    }
+                    break;
+
+                case 0:
+                    System.out.println("Închidere aplicație... O zi bună!");
+                    running = false;
+                    break;
+                    
+                default:
+                    System.out.println("Opțiune inexistentă. Încercați din nou.");
+            }
+        }
+        sc.close();
+    }
+}
